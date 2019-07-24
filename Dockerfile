@@ -20,9 +20,9 @@ ENV PATH /home/anaconda3/bin:$PATH
 # change mirror
 RUN mkdir ~/.pip \
 	&& cd ~/.pip 	
-RUN	echo -e "[global]\nindex-url = https://pypi.mirrors.ustc.edu.cn/simple/" 
+RUN	echo -e "[global]\nindex-url = https://pypi.mirrors.ustc.edu.cn/simple/" >> ~/pip.conf
 
->> ~/pip.conf
+
 
 # install tensorflow
 RUN /home/anaconda3/bin/pip install lightgbm
