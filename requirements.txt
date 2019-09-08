@@ -1,11 +1,12 @@
 pandas
 numpy
 SciPy
+h5py
 joblib
-scikit-learn
+scikit-learn==0.20.2
 lightgbm
 xgboost
-mlxtend
+mlxtend==0.15.0.0
 #
 #from sklearn import model_selection
 #from sklearn.linear_model import LogisticRegression
