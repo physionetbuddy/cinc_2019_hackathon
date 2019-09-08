@@ -58,14 +58,13 @@ def fill_null_with_mean(data):
         if col=="SepsisLabel":
             continue
         else:
-            if not any(df[col]):#if all null fill mean
-                df[col]=df[col].fillna(AB_features_mean_dict[col],inplace=True)
+            if df[col].isnull().all():#if all null fill mean
+                df[col]=df[col].fillna(AB_features_mean_dict[col])
             else: 
                 df[col].fillna(method="pad",inplace=True)#padding with before data
-            #print(df.isnull())
                 df[col].fillna(AB_features_mean_dict[col],inplace=True) # fill mean data
     return np.array(df[feature_name][0:])
-  
+
 def get_sepsis_score(current_data,model):#current
     data=fill_null_with_mean(current_data)
     print("start predict the {}th hour of data".format(data.shape[0]))
@@ -81,12 +80,18 @@ def get_sepsis_score(current_data,model):#current
         add_data=np.concatenate((array_data[-1].reshape(1,-1),trend_data),axis=1)
     #print("add_data.shape:",add_data.shape)
     if add_data.shape[1]==30:
-        score =model.predict_proba(add_data)[:,1]
-        label = score > 0.3
+        score =0.6*model[0].predict_proba(add_data)[:,1]+0.3*model[1].predict_proba(add_data)[:,1]+0.1*model[2].predict_proba(add_data)[:,1]
+        label = score > 0.45
         return score,label
     else:
         print("the shape is not match 30 ,check")
         return None
 def load_sepsis_model():
-    model =joblib.load("./8_7_A_3000_no_stcking_trained_model.m")
+    model=[]
+    lgb_model=joblib.load("/home/fms/cinc_data/new_9_05_train_AB_lgb_model.m")
+    rf_model=joblib.load("/home/fms/cinc_data/new_9_05_train_AB_rf_model.m")
+    xgb_model=joblib.load("/home/fms/cinc_data/new_9_05_train_AB_xgb_model.m")
+    model.append(lgb_model)
+    model.append(rf_model)
+    model.append(xgb_model)
     return model
