@@ -88,9 +88,9 @@ def get_sepsis_score(current_data,model):#current
         return None
 def load_sepsis_model():
     model=[]
-    lgb_model=joblib.load("/home/fms/cinc_data/new_9_05_train_AB_lgb_model.m")
-    rf_model=joblib.load("/home/fms/cinc_data/new_9_05_train_AB_rf_model.m")
-    xgb_model=joblib.load("/home/fms/cinc_data/new_9_05_train_AB_xgb_model.m")
+    lgb_model=joblib.load("new_9_05_train_AB_lgb_model.m")
+    rf_model=joblib.load("new_9_05_train_AB_rf_model.m")
+    xgb_model=joblib.load("new_9_05_train_AB_xgb_model.m")
     model.append(lgb_model)
     model.append(rf_model)
     model.append(xgb_model)
